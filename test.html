@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>instance.js - Test</title>
+    <script type="text/javascript" src="./instance.min.js"></script>
+  </head>
+
+  <body>
+  <h1>Add a Comment</h1>
+  <p>Let's send a new comment off the server. I'm not going to save it though, that's your problem.</p>
+
+  <fieldset>
+    <label>Name:</label>
+    <p>
+      <input type="text" name="name" placeholder="Your name...">
+    </p>
+    <label>Handle:</label>
+    <p>
+      <input type="text" name="handle" placeholder="Twitter handle...">
+    </p>
+    <label>Comment:</label>
+    <p>
+      <textarea name="comment" placeholder="Enter your comment..."></textarea>
+    </p>
+    <button id="submit">Submit</button>
+    <button id="show">Show All Parameters In Console</button>
+    <button id="remove_hi">Remove The "hi" Parameter</button>
+  </fieldset>
+
+  <script type="text/javascript">
+    // Define the instance model
+    Comment = new Instance({
+      name: "comment",
+      url: "/my/local/server_script",
+      method: "post",
+      defaults: {
+        referred_by: "http://github.com"
+      },
+      headers: {
+        "Commentable-Serial": "5F32v3f"
+      },
+      success: function(response) {
+        alert(response);
+      },
+      error: function(status, response) {
+        alert("Oops. The comment failed to submit (ensure you set the url to a working test server script). Status: " + status + ", Server Response: " + response);
+      }
+    });
+
+    // Let's add something random :)
+    Comment.add({hi: "hey"});
+
+    // Tell the instance to use these fields as parameters
+    Comment.addField(["name", "handle", "comment"]);
+
+    // When the Submit button is click, send off the comment.
+    var submit = document.getElementById("submit");
+    submit.addEventListener("click", function() {
+      Comment.send();
+    }, false);
+
+    // Remove the random attribute on request
+    var remove_hi = document.getElementById("remove_hi");
+    remove_hi.addEventListener("click", function() {
+      Comment.remove("hi");
+      alert("All done. Proof the `hi` attribute is gone: " + Comment.get("hi"));
+    }, false);
+
+    // Show all the attributes
+    var show = document.getElementById("show");
+    show.addEventListener("click", function() {
+      console.log(Comment.get());
+    }, false);
+  </script>
+  </body>
+
+</html>
