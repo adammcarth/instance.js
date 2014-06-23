@@ -35,7 +35,7 @@ function Instance( options ) {
   // Define some internal variables
   this.fields = [];
   this.elements = [];
-};
+}
 
 // <***------- Instance().add(); -------***>
 // Adds attributes to the instance.
@@ -51,7 +51,7 @@ Instance.prototype.add = function( attributes ) {
     // this.attributes["handle"] = "@adammcarth"
     // => {name: "Adam", handle: "@adammcarth"}
     this.attributes[attr] = value;
-  };
+  }
 };
 
 // <***------- Instance().addField(); -------***>
@@ -61,7 +61,7 @@ Instance.prototype.addField = function( names ) {
   if ( typeof names === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     names = [].concat( names );
-  };
+  }
 
   // Add the field names to the instance's fields variable, and
   // we'll use it later to retrieve the latest values from the inputs.
@@ -75,7 +75,7 @@ Instance.prototype.addElement = function( ids ) {
   if ( typeof ids === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     ids = [].concat( ids );
-  };
+  }
 
   // Add the element id's to the instance's elements variable, and
   // we'll use it later to retrieve the latest html content from the elements.
@@ -95,7 +95,7 @@ Instance.prototype.get = function( attr ) {
       this.attributes[name] = undefined;
     } else {
       this.attributes[name] = input.value;
-    };
+    }
   }, this);
 
   // Add the latest html content from any HTML ELEMENTS specified
@@ -108,7 +108,7 @@ Instance.prototype.get = function( attr ) {
       this.attributes[id] = undefined;
     } else {
       this.attributes[id] = element.innerHTML;
-    };
+    }
   }, this);
 
   // Firstly check to see if the attribute argument has be passed to the function.
@@ -119,7 +119,7 @@ Instance.prototype.get = function( attr ) {
     // If getAttr() is called with no argument, we'll show all the attributes
     // associated with the instance.
     return this.attributes;
-  };
+  }
 };
 
 // <***------- Instance().remove(); -------***>
@@ -129,7 +129,7 @@ Instance.prototype.remove = function( attributes ) {
   if ( typeof attributes === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     attributes = [].concat( attributes );
-  };
+  }
 
   // Loop through each attribute as `attr`
   attributes.forEach( function( attr ) {
@@ -145,7 +145,7 @@ Instance.prototype.reset = function() {
   if ( this.defaults ) {
     // Since there were default attributes specified, reinstate them.
     this.attributes = this.defaults;
-  };
+  }
 };
 
 // <***------- Instance().clear(); -------***>
@@ -162,15 +162,15 @@ Instance.prototype.send = function( url, method ) {
   self = this;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
-    if ( xhr.readyState == 4 ) {
-      if ( xhr.status == 200 ) {
+    if ( xhr.readyState === 4 ) {
+      if ( xhr.status === 200 ) {
         // Trigger the success callback function
         self.success(this.responseText);
       } else {
         // Trigger the error callback function
         self.error(xhr.status, this.responseText);
-      };
-    };
+      }
+    }
   };
 
   // Define some variables for the request
@@ -191,7 +191,7 @@ Instance.prototype.send = function( url, method ) {
     } else {
       // Encode the string for URL
       param_value = encodeURIComponent( this.get(param) );
-    };
+    }
 
     // If a custom instance name has been specified
     if ( this.name ) {
@@ -203,13 +203,13 @@ Instance.prototype.send = function( url, method ) {
       // Eg...
       // name=Adam,body=Hello
       parameters += param + "=" + param_value;
-    };
-  };
+    }
+  }
 
   // Add params to URL if request is GET
   if ( method === "GET" ) {
     url = url + "?" + parameters;
-  };
+  }
 
   // Set necassary headers
   xhr.open( method, url, true );
@@ -220,8 +220,8 @@ Instance.prototype.send = function( url, method ) {
     // Loop through each custom header as `header`
     for ( var header in this.headers ) {
       xhr.setRequestHeader( header, this.headers[header] );
-    };
-  };
+    }
+  }
 
   // Finally, send the request (with params) off to the server and wait for a response
   xhr.send( parameters );
