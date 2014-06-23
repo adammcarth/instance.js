@@ -35,7 +35,7 @@ function Instance( options ) {
   // Define some internal variables
   this.fields = [];
   this.elements = [];
-}
+};
 
 // <***------- Instance().add(); -------***>
 // Adds attributes to the instance.
@@ -51,8 +51,8 @@ Instance.prototype.add = function( attributes ) {
     // this.attributes["handle"] = "@adammcarth"
     // => {name: "Adam", handle: "@adammcarth"}
     this.attributes[attr] = value;
-  }
-}
+  };
+};
 
 // <***------- Instance().addField(); -------***>
 // Watches html input form elements and continuously updates instance attributes with their current value.
@@ -61,12 +61,12 @@ Instance.prototype.addField = function( names ) {
   if ( typeof names === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     names = [].concat( names );
-  }
+  };
 
   // Add the field names to the instance's fields variable, and
   // we'll use it later to retrieve the latest values from the inputs.
   this.fields = this.fields.concat( names );
-}
+};
 
 // <***------- Instance().addElement(); -------***>
 // Watches html elements (using their #) and continuously updates intance attributes with their current value.
@@ -75,12 +75,12 @@ Instance.prototype.addElement = function( ids ) {
   if ( typeof ids === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     ids = [].concat( ids );
-  }
+  };
 
   // Add the element id's to the instance's elements variable, and
   // we'll use it later to retrieve the latest html content from the elements.
   this.elements = this.elements.concat( ids );
-}
+};
 
 // <***------- Instance().get(); -------***>
 // Gets the value of a single attribute in the instance.
@@ -95,7 +95,7 @@ Instance.prototype.get = function( attr ) {
       this.attributes[name] = undefined;
     } else {
       this.attributes[name] = input.value;
-    }
+    };
   }, this);
 
   // Add the latest html content from any HTML ELEMENTS specified
@@ -108,7 +108,7 @@ Instance.prototype.get = function( attr ) {
       this.attributes[id] = undefined;
     } else {
       this.attributes[id] = element.innerHTML;
-    }
+    };
   }, this);
 
   // Firstly check to see if the attribute argument has be passed to the function.
@@ -119,8 +119,8 @@ Instance.prototype.get = function( attr ) {
     // If getAttr() is called with no argument, we'll show all the attributes
     // associated with the instance.
     return this.attributes;
-  }
-}
+  };
+};
 
 // <***------- Instance().remove(); -------***>
 // Deletes attributes from the instance.
@@ -129,13 +129,13 @@ Instance.prototype.remove = function( attributes ) {
   if ( typeof attributes === "string" ) {
     // Convert it to an array so it can be used in a forEach loop below
     attributes = [].concat( attributes );
-  }
+  };
 
   // Loop through each attribute as `attr`
   attributes.forEach( function( attr ) {
     delete this.attributes[attr];
   }, this);
-}
+};
 
 // <***------- Instance().reset(); -------***>
 // Resets the instance to it's default attributes (removing everything else).
@@ -145,15 +145,15 @@ Instance.prototype.reset = function() {
   if ( this.defaults ) {
     // Since there were default attributes specified, reinstate them.
     this.attributes = this.defaults;
-  }
-}
+  };
+};
 
 // <***------- Instance().clear(); -------***>
 // Completely wipes the instance's attributes, including it's defaults.
 Instance.prototype.clear = function() {
   // Reset the instance attributes to an empty object
   this.attributes = {};
-}
+};
 
 // <***------- Instance().send(); -------***>
 // Sends the instance's attributes off as parameters the the specified URL on the server.
@@ -169,9 +169,9 @@ Instance.prototype.send = function( url, method ) {
       } else {
         // Trigger the error callback function
         self.error(xhr.status, this.responseText);
-      }
-    }
-  }
+      };
+    };
+  };
 
   // Define some variables for the request
   method = method || this.method || "POST";
@@ -191,7 +191,7 @@ Instance.prototype.send = function( url, method ) {
     } else {
       // Encode the string for URL
       param_value = encodeURIComponent( this.get(param) );
-    }
+    };
 
     // If a custom instance name has been specified
     if ( this.name ) {
@@ -203,13 +203,13 @@ Instance.prototype.send = function( url, method ) {
       // Eg...
       // name=Adam,body=Hello
       parameters += param + "=" + param_value;
-    }
-  }
+    };
+  };
 
   // Add params to URL if request is GET
   if ( method === "GET" ) {
     url = url + "?" + parameters;
-  }
+  };
 
   // Set necassary headers
   xhr.open( method, url, true );
@@ -220,9 +220,9 @@ Instance.prototype.send = function( url, method ) {
     // Loop through each custom header as `header`
     for ( var header in this.headers ) {
       xhr.setRequestHeader( header, this.headers[header] );
-    }
-  }
+    };
+  };
 
   // Finally, send the request (with params) off to the server and wait for a response
   xhr.send( parameters );
-}
+};
