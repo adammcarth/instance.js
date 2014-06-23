@@ -1,4 +1,4 @@
-## Front end modeling, done right. [![Code Climate](http://img.shields.io/codeclimate/github/adammcarthur/jtask.svg)](https://codeclimate.com/github/adammcarthur/jtask)
+## Front end modeling, done right. [![Code Climate](https://codeclimate.com/github/adammcarth/instance.js.png)](https://codeclimate.com/github/adammcarth/instance.js)
 
 **instance.js** is a lightweight Javascript library that let's you model data on the client side before sending it off as parameters to the server.
 
