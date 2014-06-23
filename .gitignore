@@ -1,0 +1,37 @@
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.tmp
+
+# Linux
+.directory
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Ruby
+/tmp/
+/spec/reports/
+/spec/tmp/
+/doc/
+/rdoc/
+/server/log/
+Gemfile.lock
+.ruby-version
+.ruby-gemset
+.rspec
+*.gem
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
