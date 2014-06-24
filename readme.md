@@ -74,3 +74,4 @@ System.out.print(req.getParameter("name"));
 Don't worry, **instance.js** has plenty more functionality to show off, including continuous updating of attributes (parameters) from HTML Input Fields and Elements, and some advanced settings for `Instance.send()` when you send your instance off to the server.
 
 #### [Check Out The instance.js Wiki For All Documentation](https://github.com/adammcarth/instance.js/wiki "See Full Documentation")
+#### [Contributing](https://github.com/adammcarth/instance.js/wiki/Contributing)
