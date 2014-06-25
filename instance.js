@@ -36,6 +36,7 @@
         // Define some internal variables
         this.fields = [];
         this.elements = [];
+        this.removeQueue = [];
     };
 
     /**
@@ -109,6 +110,22 @@
     };
 
     /**
+     * Function to remove values from arrays
+     *
+     * @param {Array} this.elements or this.fields
+     *
+     * @returns {undefined}
+     */
+    Array.prototype.removeByValue = function( val ) {
+        for ( var i=0; i < this.length; i++ ) {
+            if ( this[i] == val ) {
+                this.splice( i, 1 );
+                break;
+            }
+        }
+    }
+
+    /**
      * Gets the value of a single attribute in the instance.
      *
      * @param {string} attr The attribute to get.
@@ -145,6 +162,18 @@
             }
         }, this);
 
+        // If there needs to be items removed from the Instance,
+        // they will be removed now before displaying the attributes.
+        this.removeQueue.forEach( function( attr ) {
+            // Remove from the attributes
+            delete this.attributes[attr];
+            // Remove from the dynamic document element lists
+            this.fields.removeByValue( attr );
+            this.elements.removeByValue( attr );
+        }, this);
+        // Reset the queue
+        this.removeQueue = [];
+
         // Firstly check to see if the attribute argument has be passed to the function.
         if ( attr ) {
             // If it is, we'll find and display the attribute from the instance's attributes.
@@ -164,16 +193,11 @@
      * @returns {undefined}
      */
     Instance.prototype.remove = function( attributes ) {
-        // Check if the `attributes` argument is a string
-        if ( typeof attributes === "string" ) {
-            // Convert it to an array so it can be used in a forEach loop below
-            attributes = [].concat( attributes );
-        }
+        // Covert the `attributes` argument to an array if it is a string
+        attributes = ensureArray( attributes );
 
-        // Loop through each attribute as `attr`
-        attributes.forEach( function( attr ) {
-            delete this.attributes[attr];
-        }, this);
+        // Add the attributes to be removed to the removeQueue
+        this.removeQueue = this.removeQueue.concat( attributes );
     };
 
     /**
