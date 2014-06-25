@@ -38,8 +38,13 @@
         this.elements = [];
     };
 
-    // <***------- Instance().add(); -------***>
-    // Adds attributes to the instance.
+    /**
+     * Adds attributes to the Instance attributes.
+     * 
+     * @param {Object} attributes The attributes to add.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.add = function( attributes ) {
         var value;
 
@@ -59,7 +64,13 @@
         }
     };
 
-    // This function is used to convert a string into an array.
+    /**
+     * Converts a string into an array element and returns it.
+     * 
+     * @param {String|Array} input Check to make sure this is an array.
+     * 
+     * @returns {Array}
+     */
     function ensureArray( input ) {
         var toArray = [];
 
@@ -72,8 +83,13 @@
         return input;
     }
 
-    // <***------- Instance().addField(); -------***>
-    // Watches html input form elements and continuously updates instance attributes with their current value.
+    /**
+     * Watches html input form elements and continuously updates instance attributes with their current value.
+     * 
+     * @param {Array} names An array of form element to watch.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.addField = function( names ) {
         // Convert `names` to an array if it is a string
         names = ensureArray( names );
@@ -83,8 +99,13 @@
         this.fields = this.fields.concat( names );
     };
 
-    // <***------- Instance().addElement(); -------***>
-    // Watches html elements (using their #) and continuously updates intance attributes with their current value.
+    /**
+     * Watches html elements (using their #) and continuously updates intance attributes with their current value.
+     * 
+     * @param {Array} ids An array of form element id's to watch.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.addElement = function( ids ) {
         // Convert `ids` to an array if it is a string
         ids = ensureArray( ids );
@@ -94,8 +115,13 @@
         this.elements = this.elements.concat( ids );
     };
 
-    // <***------- Instance().get(); -------***>
-    // Gets the value of a single attribute in the instance.
+    /**
+     * Gets the value of a single attribute in the instance.
+     * 
+     * @param {string} attr The attribute to get.
+     * 
+     * @returns {Object}
+     */
     Instance.prototype.get = function( attr ) {
         var input,
             element;
@@ -137,8 +163,13 @@
         }
     };
 
-    // <***------- Instance().remove(); -------***>
-    // Deletes attributes from the instance.
+    /**
+     * Deletes attributes from the instance.
+     * 
+     * @param {Array|String} attributes An array or string which details the attributes to remove.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.remove = function( attributes ) {
         // Check if the `attributes` argument is a string
         if ( typeof attributes === "string" ) {
@@ -152,8 +183,11 @@
         }, this);
     };
 
-    // <***------- Instance().reset(); -------***>
-    // Resets the instance to it's default attributes (removing everything else).
+    /**
+     * Resets the instance to it's default attributes (removing everything else).
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.reset = function() {
         // Reset the instance attributes to an empty object
         this.attributes = {};
@@ -163,15 +197,24 @@
         }
     };
 
-    // <***------- Instance().clear(); -------***>
-    // Completely wipes the instance's attributes, including it's defaults.
+    /**
+     * Completely wipes the instance's attributes, including it's defaults.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.clear = function() {
         // Reset the instance attributes to an empty object
         this.attributes = {};
     };
 
-    // <***------- Instance().send(); -------***>
-    // Sends the instance's attributes off as parameters the the specified URL on the server.
+    /**
+     * Sends the instance's attributes off as parameters the the specified URL on the server.
+     * 
+     * @param {string} url The URL to to send the attributes.
+     * @param {string} method The HTTP method to use.
+     * 
+     * @returns {undefined}
+     */
     Instance.prototype.send = function( url, method ) {
         // A handler to react to the server's response
         var self = this,
