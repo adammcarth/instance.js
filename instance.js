@@ -46,22 +46,15 @@
      * @returns {undefined}
      */
     Instance.prototype.add = function( attributes ) {
-        var value;
-
         // Loop through each attribute specified (as `attr`).
-        for ( var attr in attributes ) {
-            if ( attributes.hasOwnProperty( attr ) ) {
-                // Get the value of the current attribute in the loop
-                 value = attributes[attr];
-
-                // Append the new attribute to the instance's attributes object variable (this.attributes).
-                // eg:
-                // this.attributes = {name: "Adam"}
-                // this.attributes["handle"] = "@adammcarth"
-                // => {name: "Adam", handle: "@adammcarth"}
-                this.attributes[attr] = value;
-            }
-        }
+        Object.keys(attributes).forEach(function (attr) {
+            // Append the new attribute to the instance's attributes object variable (this.attributes).
+            // eg:
+            // this.attributes = {name: "Adam"}
+            // this.attributes["handle"] = "@adammcarth"
+            // => {name: "Adam", handle: "@adammcarth"}
+            this.attributes[attr] = attributes[attr];
+        }, this);
     };
 
     /**
@@ -220,7 +213,9 @@
         var self = this,
             xhr = new XMLHttpRequest(),
             parameters = "",
-            param_value = "";
+            param_value = "",
+            attributes = this.get(),
+            headers = this.headers;
 
         xhr.onreadystatechange = function() {
             if ( xhr.readyState === 4 ) {
@@ -240,34 +235,34 @@
         url = url || this.url || "./";
 
         // Turn the instance's attributes a query string of parameters
-      
+
         // Loop through each attribute as `param`
-        for ( var param in this.get() ) {
-            if ( this.get().hasOwnProperty( param ) ) {
-                // add a `&` before the next attribute is added
-                parameters += "&";
+        Object.keys(attributes).forEach(function (param) {
+            var param = attributes[param];
 
-                if ( this.get(param) === undefined ) {
-                    // Set the value to an empty string (we don't want it to equal "undefined")
-                    param_value = "";
-                } else {
-                    // Encode the string for URL
-                    param_value = encodeURIComponent( this.get(param) );
-                }
+            // add a `&` before the next attribute is added
+            parameters += "&";
 
-                // If a custom instance name has been specified
-                if ( this.name ) {
-                    // Eg, Instance({ name: "comment" })...
-                    // comment[name]=Adam,comment[body]=Hello
-                    parameters += this.name + "[" + param + "]" + "=" + param_value;
-                } else {
-                    // No custom name given, so we'll just pass the parameters on as a single dimension
-                    // Eg...
-                    // name=Adam,body=Hello
-                    parameters += param + "=" + param_value;
-                }
+            if ( this.get(param) === undefined ) {
+                // Set the value to an empty string (we don't want it to equal "undefined")
+                param_value = "";
+            } else {
+                // Encode the string for URL
+                param_value = encodeURIComponent( this.get(param) );
             }
-        }
+
+            // If a custom instance name has been specified
+            if ( this.name ) {
+                // Eg, Instance({ name: "comment" })...
+                // comment[name]=Adam,comment[body]=Hello
+                parameters += this.name + "[" + param + "]" + "=" + param_value;
+            } else {
+                // No custom name given, so we'll just pass the parameters on as a single dimension
+                // Eg...
+                // name=Adam,body=Hello
+                parameters += param + "=" + param_value;
+            }
+        });
 
         // Add params to URL if request is GET
         if ( method === "GET" ) {
@@ -279,13 +274,10 @@
         xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
 
         // Set custom request headers (if required)
-        if ( this.headers ) {
-            // Loop through each custom header as `header`
-            for ( var header in this.headers ) {
-                if ( this.headers.hasOwnProperty( header ) ) {
-                  xhr.setRequestHeader( header, this.headers[header] );
-                }
-            }
+        if ( headers ) {
+            Object.keys(headers).forEach(function (header) {
+                xhr.setRequestHeader( header, headers[header]);
+            });
         }
 
         // Finally, send the request (with params) off to the server and wait for a response
