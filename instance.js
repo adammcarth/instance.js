@@ -56,14 +56,22 @@ Instance.prototype.add = function( attributes ) {
   }
 };
 
+// This function is used to convert a string into an array.
+function ensureArray( input ) {
+  // Check if the `input` argument is a string
+  if ( typeof input === "string" ) {
+    // Convert it to an array so it can be used in a forEach loop below
+    var array = [].concat( input );
+  }
+
+  return array || input;
+}
+
 // <***------- Instance().addField(); -------***>
 // Watches html input form elements and continuously updates instance attributes with their current value.
 Instance.prototype.addField = function( names ) {
-  // Check if the `names` argument is a string
-  if ( typeof names === "string" ) {
-    // Convert it to an array so it can be used in a forEach loop below
-    names = [].concat( names );
-  }
+  // Convert `names` to an array if it is a string
+  names = ensureArray( names );
 
   // Add the field names to the instance's fields variable, and
   // we'll use it later to retrieve the latest values from the inputs.
@@ -73,11 +81,8 @@ Instance.prototype.addField = function( names ) {
 // <***------- Instance().addElement(); -------***>
 // Watches html elements (using their #) and continuously updates intance attributes with their current value.
 Instance.prototype.addElement = function( ids ) {
-  // Check if the `id's` argument is a string
-  if ( typeof ids === "string" ) {
-    // Convert it to an array so it can be used in a forEach loop below
-    ids = [].concat( ids );
-  }
+  // Convert `ids` to an array if it is a string
+  ids = ensureArray( ids );
 
   // Add the element id's to the instance's elements variable, and
   // we'll use it later to retrieve the latest html content from the elements.
