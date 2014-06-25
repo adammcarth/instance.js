@@ -42,15 +42,17 @@ function Instance( options ) {
 Instance.prototype.add = function( attributes ) {
   // Loop through each attribute specified (as `attr`).
   for ( var attr in attributes ) {
-    // Get the value of the current attribute in the loop
-    var value = attributes[attr];
+    if ( attributes.hasOwnProperty( attr ) ) {
+      // Get the value of the current attribute in the loop
+      var value = attributes[attr];
 
-    // Append the new attribute to the instance's attributes object variable (this.attributes).
-    // eg:
-    // this.attributes = {name: "Adam"}
-    // this.attributes["handle"] = "@adammcarth"
-    // => {name: "Adam", handle: "@adammcarth"}
-    this.attributes[attr] = value;
+      // Append the new attribute to the instance's attributes object variable (this.attributes).
+      // eg:
+      // this.attributes = {name: "Adam"}
+      // this.attributes["handle"] = "@adammcarth"
+      // => {name: "Adam", handle: "@adammcarth"}
+      this.attributes[attr] = value;
+    }
   }
 };
 
@@ -104,7 +106,7 @@ Instance.prototype.get = function( attr ) {
     // Get the first element with id="<id>"
     var element = document.getElementById( id );
     // Add the contents of the element to an instance attribute
-    if ( element === undefined || element.innerHTML === "" ) {
+    if ( element === null || element.innerHTML === "" ) {
       this.attributes[id] = undefined;
     } else {
       this.attributes[id] = element.innerHTML;
@@ -159,7 +161,7 @@ Instance.prototype.clear = function() {
 // Sends the instance's attributes off as parameters the the specified URL on the server.
 Instance.prototype.send = function( url, method ) {
   // A handler to react to the server's response
-  self = this;
+  var self = this;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if ( xhr.readyState === 4 ) {
@@ -179,30 +181,32 @@ Instance.prototype.send = function( url, method ) {
   url = url || this.url || "./";
 
   // Turn the instance's attributes a query string of parameters
-  parameters = "";
+  var parameters = "";
   // Loop through each attribute as `param`
   for ( var param in this.get() ) {
-    // add a `&` before the next attribute is added
-    parameters += "&";
+    if ( this.get().hasOwnProperty( param ) ) {
+      // add a `&` before the next attribute is added
+      parameters += "&";
 
-    if ( this.get(param) === undefined ) {
-      // Set the value to an empty string (we don't want it to equal "undefined")
-      param_value = "";
-    } else {
-      // Encode the string for URL
-      param_value = encodeURIComponent( this.get(param) );
-    }
+      if ( this.get(param) === undefined ) {
+        // Set the value to an empty string (we don't want it to equal "undefined")
+        var param_value = "";
+      } else {
+        // Encode the string for URL
+        var param_value = encodeURIComponent( this.get(param) );
+      }
 
-    // If a custom instance name has been specified
-    if ( this.name ) {
-      // Eg, Instance({ name: "comment" })...
-      // comment[name]=Adam,comment[body]=Hello
-      parameters += this.name + "[" + param + "]" + "=" + param_value;
-    } else {
-      // No custom name given, so we'll just pass the parameters on as a single dimension
-      // Eg...
-      // name=Adam,body=Hello
-      parameters += param + "=" + param_value;
+      // If a custom instance name has been specified
+      if ( this.name ) {
+        // Eg, Instance({ name: "comment" })...
+        // comment[name]=Adam,comment[body]=Hello
+        parameters += this.name + "[" + param + "]" + "=" + param_value;
+      } else {
+        // No custom name given, so we'll just pass the parameters on as a single dimension
+        // Eg...
+        // name=Adam,body=Hello
+        parameters += param + "=" + param_value;
+      }
     }
   }
 
@@ -219,7 +223,9 @@ Instance.prototype.send = function( url, method ) {
   if ( this.headers ) {
     // Loop through each custom header as `header`
     for ( var header in this.headers ) {
-      xhr.setRequestHeader( header, this.headers[header] );
+      if ( this.headers.hasOwnProperty( header ) ) {
+        xhr.setRequestHeader( header, this.headers[header] );
+      }
     }
   }
 
