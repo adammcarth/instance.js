@@ -1,5 +1,5 @@
 /*!
-  instance.js v1.0.0: A lightweight javascript library to model data on the client side
+  instance.js v1.0.1: A lightweight javascript library to model data on the client side
   before sending it off to the server.
   Created by @adammcarth under the MIT license
 */
