@@ -41,11 +41,12 @@
     // <***------- Instance().add(); -------***>
     // Adds attributes to the instance.
     Instance.prototype.add = function( attributes ) {
+        var value;
       // Loop through each attribute specified (as `attr`).
       for ( var attr in attributes ) {
         if ( attributes.hasOwnProperty( attr ) ) {
           // Get the value of the current attribute in the loop
-          var value = attributes[attr];
+           value = attributes[attr];
 
           // Append the new attribute to the instance's attributes object variable (this.attributes).
           // eg:
@@ -59,13 +60,14 @@
 
     // This function is used to convert a string into an array.
     function ensureArray( input ) {
+        var toArray = [];
       // Check if the `input` argument is a string
       if ( typeof input === "string" ) {
         // Convert it to an array so it can be used in a forEach loop below
-        var array = [].concat( input );
+         return toArray.concat( input );
       }
 
-      return array || input;
+      return input;
     }
 
     // <***------- Instance().addField(); -------***>
@@ -93,11 +95,14 @@
     // <***------- Instance().get(); -------***>
     // Gets the value of a single attribute in the instance.
     Instance.prototype.get = function( attr ) {
+        var input,
+            element;
+
       // Add the latest values of any HTML INPUT FIELDS specified
       // to the instance's attributes
       this.fields.forEach( function( name ) {
         // Get the first input with name="<name>"
-        var input = document.getElementsByName( name )[0];
+         input = document.getElementsByName( name )[0];
         // Add the value of the field to an instance attribute
         if ( input === undefined || input.value === "" ) {
           this.attributes[name] = undefined;
@@ -110,7 +115,7 @@
       // to the instance's attributes
       this.elements.forEach( function( id ) {
         // Get the first element with id="<id>"
-        var element = document.getElementById( id );
+        element = document.getElementById( id );
         // Add the contents of the element to an instance attribute
         if ( element === null || element.innerHTML === "" ) {
           this.attributes[id] = undefined;
@@ -167,8 +172,11 @@
     // Sends the instance's attributes off as parameters the the specified URL on the server.
     Instance.prototype.send = function( url, method ) {
       // A handler to react to the server's response
-      var self = this;
-      var xhr = new XMLHttpRequest();
+        var self = this,
+            xhr = new XMLHttpRequest(),
+            parameters = "",
+            param_value = "";
+
       xhr.onreadystatechange = function() {
         if ( xhr.readyState === 4 ) {
           if ( xhr.status === 200 ) {
@@ -187,7 +195,7 @@
       url = url || this.url || "./";
 
       // Turn the instance's attributes a query string of parameters
-      var parameters = "";
+      
       // Loop through each attribute as `param`
       for ( var param in this.get() ) {
         if ( this.get().hasOwnProperty( param ) ) {
@@ -196,10 +204,10 @@
 
           if ( this.get(param) === undefined ) {
             // Set the value to an empty string (we don't want it to equal "undefined")
-            var param_value = "";
+            param_value = "";
           } else {
             // Encode the string for URL
-            var param_value = encodeURIComponent( this.get(param) );
+            param_value = encodeURIComponent( this.get(param) );
           }
 
           // If a custom instance name has been specified
