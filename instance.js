@@ -40,9 +40,9 @@
 
     /**
      * Adds attributes to the Instance attributes.
-     * 
+     *
      * @param {Object} attributes The attributes to add.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.add = function( attributes ) {
@@ -59,9 +59,9 @@
 
     /**
      * Converts a string into an array element and returns it.
-     * 
+     *
      * @param {String|Array} input Check to make sure this is an array.
-     * 
+     *
      * @returns {Array}
      */
     function ensureArray( input ) {
@@ -78,9 +78,9 @@
 
     /**
      * Watches html input form elements and continuously updates instance attributes with their current value.
-     * 
+     *
      * @param {Array} names An array of form element to watch.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.addField = function( names ) {
@@ -94,9 +94,9 @@
 
     /**
      * Watches html elements (using their #) and continuously updates intance attributes with their current value.
-     * 
+     *
      * @param {Array} ids An array of form element id's to watch.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.addElement = function( ids ) {
@@ -110,9 +110,9 @@
 
     /**
      * Gets the value of a single attribute in the instance.
-     * 
+     *
      * @param {string} attr The attribute to get.
-     * 
+     *
      * @returns {Object}
      */
     Instance.prototype.get = function( attr ) {
@@ -158,9 +158,9 @@
 
     /**
      * Deletes attributes from the instance.
-     * 
+     *
      * @param {Array|String} attributes An array or string which details the attributes to remove.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.remove = function( attributes ) {
@@ -178,7 +178,7 @@
 
     /**
      * Resets the instance to it's default attributes (removing everything else).
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.reset = function() {
@@ -192,7 +192,7 @@
 
     /**
      * Completely wipes the instance's attributes, including it's defaults.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.clear = function() {
@@ -202,10 +202,10 @@
 
     /**
      * Sends the instance's attributes off as parameters the the specified URL on the server.
-     * 
+     *
      * @param {string} url The URL to to send the attributes.
      * @param {string} method The HTTP method to use.
-     * 
+     *
      * @returns {undefined}
      */
     Instance.prototype.send = function( url, method ) {
@@ -237,9 +237,7 @@
         // Turn the instance's attributes a query string of parameters
 
         // Loop through each attribute as `param`
-        Object.keys(attributes).forEach(function (param) {
-            var param = attributes[param];
-
+        Object.keys(this.get()).forEach(function (param) {
             // add a `&` before the next attribute is added
             parameters += "&";
 
@@ -262,7 +260,7 @@
                 // name=Adam,body=Hello
                 parameters += param + "=" + param_value;
             }
-        });
+        }, this);
 
         // Add params to URL if request is GET
         if ( method === "GET" ) {
@@ -283,6 +281,6 @@
         // Finally, send the request (with params) off to the server and wait for a response
         xhr.send( parameters );
     };
-    
+
     window.Instance = Instance;
 })(window);
