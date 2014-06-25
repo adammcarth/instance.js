@@ -23,11 +23,30 @@ Now that we have our *"temporary model"* (instance) defined, we are free to play
 Comment.add({
    name: "Adam",
    handle: "@adammcarth",
-   message: "Hello, world!"
+   reply: false
 });
 ```
 
-Perhaps some quick validation?:
+In a real life situation it's more than likely that there will be HTML input fields and or elements that need to be sent off - particularly in the case of a new comment. That's where Instance gets cool. This script can continuously update a parameter with the latest value, like this...
+
+```html
+<input type="text" name="email" value="Adam">
+<textarea name="message">
+  My message will get added :D
+</textarea>
+
+<div id="addMeToo">My latest value will be added, too.</div>
+```
+
+```javascript
+Comment.addField([
+   "email",
+   "message"
+]);
+Comment.addElement("addMeToo");
+```
+
+Finally, we might do some quick validation. We can use the `.get()` method to retrieve the latest value of a parameter in the temporary model. We'll get the message and make sure it's longer than 5 characters:
 
 ```javascript
 var message = Comment.get("message"); // => "Hello, world!"
