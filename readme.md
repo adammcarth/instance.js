@@ -4,7 +4,7 @@
 
 Instance was coded from the ground up using pure Javascript (no dependencies or plugins required), and draws on similar concepts from existing frameworks like *Backbone.js* and *Node.js*. As you will see below, instance.js does not interact with the server at all (except for sending the parameters). This means it **will not** save stuff for you, synchronise elements with data from the server or perform similar operations. Instance merely provides you with an interface to perform such tasks - the gateway **from** data on the front end to your server side magic.
 
-And it's really easy, too...
+#### Get Started: Define a new instance
 
 ```javascript
 var Comment = new Instance({
@@ -21,21 +21,24 @@ Now that we have our *"temporary model"* (instance) defined, we are free to play
 
 ```javascript
 Comment.add({
-   name: "Adam",
+   type: "reply",
    handle: "@adammcarth",
-   reply: false
+   quote: "What does instance do?"
 });
 ```
+
+#### Dynamic Parameters
 
 In a real life situation it's more than likely that there will be HTML input fields and or elements that need to be sent off - particularly in the case of a new comment. That's where Instance gets cool. This script can continuously update a parameter with the latest value, like this...
 
 ```html
-<input type="text" name="email" value="Adam">
+<input type="text" name="first-name" value="John">
+<input type="text" name="email" value="foo@bar.com">
 <textarea name="message">
-  My message will get added :D
+  @adammcarth, Instance adds fields for you!
 </textarea>
 
-<div id="addMeToo">My latest value will be added, too.</div>
+<div id="status">Edited.</div>
 ```
 
 ```javascript
@@ -43,17 +46,23 @@ Comment.addField([
    "email",
    "message"
 ]);
-Comment.addElement("addMeToo");
+
+Comment.addElement("status");
 ```
 
-Finally, we might do some quick validation. We can use the `.get()` method to retrieve the latest value of a parameter in the temporary model. We'll get the message and make sure it's longer than 5 characters:
+#### Get Parameters
+
+After all that, what's the comment looking like?
 
 ```javascript
-var message = Comment.get("message"); // => "Hello, world!"
-if ( message.length < 5 ) {
-   alert("Oops. Your comment must be more than 5 characters.");
-}
+Comment.get();
+// => { type: "reply", handle: "@adammcarth", quote: "What does instance do?", first-name: "John", email: "foo@bar.com", message: "@adammcarth, Instance adds fields for you!", status: "Edited." }
+
+Comment.get("first-name");
+// => "John"
 ```
+
+#### Send The Comment To The Server
 
 **This new comment is lookin' good.** Let's send her off the the server so we can save it or whatever...
 
@@ -63,6 +72,8 @@ Comment.send();
 // Some milliseconds later...
 // "Your comment has been saved!"
 ```
+
+#### Get Parameter Values In Your Scripts
 
 Access the parameters on the server just like you would normally:
 
