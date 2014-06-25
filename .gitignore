@@ -35,3 +35,5 @@ Gemfile.lock
 # Sublime Text
 *.sublime-workspace
 *.sublime-project
+
+test.rb
