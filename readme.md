@@ -65,7 +65,7 @@ $("#submit").click(function() {
 
 #### Time to do your thing
 
-You might recall that [before]() we specified a `name:` of "comment" when setting up the Comment instance. As a result, parameters will be sent in a two dimensional hash, that is:
+You might recall that [before](#get-started-define-a-new-instance) we specified a `name:` of "comment" when setting up the Comment instance. As a result, parameters will be sent in a two dimensional hash, that is:
 
 ```ruby
 { :comment => { :name => "", :email => "", message => "" } }
@@ -87,7 +87,7 @@ echo $_POST["comment"]["name"];
 
 #### Dive deeper
 
-There's plenty more functionality to show off, including a plethora of settings for `.send()`, removing of parameters and clearing Instances, adding parameters manually or from html elements, and built-in client side validations are on the way.
+There's plenty more functionality to show off, including a plethora of settings for `.send()`, [removing of parameters](https://github.com/adammcarth/instance.js/wiki/Remove-Parameters) and [clearing](https://github.com/adammcarth/instance.js/wiki/Reset-Instances) Instances, adding parameters [manually](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#add-attributes-) or from [html elements](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#addelement), and built-in client side validations are on the way.
 
 #### [Check Out The instance.js Wiki For All Documentation](https://github.com/adammcarth/instance.js/wiki "See Full Documentation")
 #### [Contributing](https://github.com/adammcarth/instance.js/wiki/Contributing)
