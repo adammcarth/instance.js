@@ -1,107 +1,93 @@
 ## Front end modeling, made easy. [![Code Climate](https://codeclimate.com/github/adammcarth/instance.js.png)](https://codeclimate.com/github/adammcarth/instance.js)
 
-**instance.js** is a lightweight Javascript library that let's you model data on the client side before sending it off as parameters to the server.
+Instance.js is a lightweight Javascript library that let's you store and manipulate data before sending it off as parameters to the server.
 
-Instance was coded from the ground up using pure Javascript (no dependencies or plugins required), and draws on similar concepts from existing frameworks like *Backbone.js* and *Node.js*. As you will see below, instance.js does not interact with the server at all (except for sending the parameters). This means it **will not** save stuff for you, synchronise elements with data from the server or perform similar operations. Instance merely provides you with an interface to perform such tasks - the gateway **from** data on the front end to your server side magic.
+Instance was coded from the ground up using pure Javascript (no dependencies or plugins required), and draws on similar concepts from existing frameworks like *Backbone*.
+
+The library operates purely on the front end level. It won't save or sync your models, but it provides you with a solid interface to create robust user experiences and get data from the user's web browser to your server efficiently. It goes perfectly with an MVC framework such as Rails or Symfony, find out why...
 
 #### Get Started: Define a new instance
 
+The first thing to do is define your first **Instance Model**. An Instance Model is essentially a collection of parameters that are usually obtained from html input fields, such as a comment. You'll also need to include the [latest version](https://github.com/adammcarth/instance.js/tree/master/latest_version) of instance.js in your document.
+
+```html
+<head>
+   <title>instance.js Demo</title>
+   <script type="text/javascript" src="instance.min.js"></script>
+</head>
+```
+
 ```javascript
 var Comment = new Instance({
+   name: "comment",
    url: "/comments/new",
-   defaults: {
-      subscribe_to_thread: false
-   },
    success: function() {
       alert("Your comment has been saved!");
    }
 });
 ```
-Now that we have our *"temporary model"* (instance) defined, we are free to play around with it...
+#### Parameters: Add data from a form
 
-```javascript
-Comment.add({
-   type: "reply",
-   handle: "@adammcarth",
-   quote: "What does instance do?"
-});
-```
-
-#### Dynamic Parameters
-
-In a real life situation it's more than likely that there will be HTML input fields and or elements that need to be sent off - particularly in the case of a new comment. That's where Instance gets cool. This script can continuously update a parameter with the latest value, like this...
+Once we have our Instance Model defined, we're free to start playing around with it. Since we're creating a new comment, we'll setup the instance to include the latest values from a form:
 
 ```html
-<input type="text" name="first-name" value="John">
-<input type="text" name="email" value="foo@bar.com">
-<textarea name="message">
-  @adammcarth, Instance adds fields for you!
-</textarea>
-
-<div id="status">Edited.</div>
+<input type="text" name="name">
+<input type="text" name="email">
+<textarea name="message"></textarea>
 ```
 
 ```javascript
 Comment.addField([
+   "name",
    "email",
    "message"
 ]);
-
-Comment.addElement("status");
 ```
 
-#### Get Parameters
-
-After all that, what's the comment looking like?
+We now have direct access to the values of those fields under the `Comment` namespace. Let's remind our comentee what their name is.
 
 ```javascript
-Comment.get();
-// => { type: "reply", handle: "@adammcarth", quote: "What does instance do?", first-name: "John", email: "foo@bar.com", message: "@adammcarth, Instance adds fields for you!", status: "Edited." }
+var name = Comment.get("name");
 
-Comment.get("first-name");
-// => "John"
+alert("Your name is " + name );
 ```
 
-#### Send The Comment To The Server
+#### Finishing Up: Send the instance to the server
 
-**This new comment is lookin' good.** Let's send her off the the server so we can save it or whatever...
+With parameters assigned to our new Instance Model, we can now perform an AJAX request to send them to any route on your server. We used jQuery to handle the click event.
 
 ```javascript
-// Fire it off!
-Comment.send();
-// Some milliseconds later...
-// "Your comment has been saved!"
+$("#submit").click(function() {
+   // Fire it off!
+   Comment.send();
+});
 ```
 
-#### Get Parameter Values In Your Scripts
+#### Time to do your thing
 
-Access the parameters on the server just like you would normally:
+You might recall that [before]() we specified a `name:` of "comment" when setting up the Comment instance. As a result, parameters will be sent in a two dimensional hash, that is:
+
+```ruby
+{ :comment => { :name => "", :email => "", message => "" } }
+```
+
+In your web framework, access the parameters just like you would normally. What you do with them is up to you!
 
 ```ruby
 # Ruby
-puts params[:name]
+puts params[:comment][:name]
 #=> "Adam"
 ```
 
 ```php
 // PHP
-echo $_POST["name"];
+echo $_POST["comment"]["name"];
 // => "Adam"
 ```
 
-```python
-# Python
-print parsed_url["name"]
-#=> "Adam"
-```
+#### Dive deeper
 
-```java
-// Java
-System.out.print(req.getParameter("name"));
-// => "Adam"
-```
-
-Don't worry, **instance.js** has plenty more functionality to show off, including continuous updating of attributes (parameters) from HTML Input Fields and Elements, and some advanced settings for `Instance.send()` when you send your instance off to the server.
+There's plenty more functionality to show off, including a plethora of settings for `.send()`, removing of parameters and clearing Instances, adding parameters manually or from html elements, and built-in client side validations are on the way.
 
 #### [Check Out The instance.js Wiki For All Documentation](https://github.com/adammcarth/instance.js/wiki "See Full Documentation")
 #### [Contributing](https://github.com/adammcarth/instance.js/wiki/Contributing)
