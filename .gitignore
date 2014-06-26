@@ -19,21 +19,9 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# Ruby
-/tmp/
-/spec/reports/
-/spec/tmp/
-/doc/
-/rdoc/
-/server/log/
-Gemfile.lock
-.ruby-version
-.ruby-gemset
-.rspec
-*.gem
-
 # Sublime Text
 *.sublime-workspace
 *.sublime-project
 
-test.rb
+test/test.rb
+node_modules
