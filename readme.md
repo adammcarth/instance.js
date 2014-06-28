@@ -44,7 +44,7 @@ Comment.addField([
 ]);
 ```
 
-We now have direct access to the values of those fields under the `Comment` namespace. Let's remind our comentee what their name is.
+We now have direct access to the values of those fields under the `Comment` namespace. Let's remind our commentee what their name is.
 
 ```javascript
 var name = Comment.get("name");
