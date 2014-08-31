@@ -89,5 +89,7 @@ echo $_POST["comment"]["name"];
 
 There's plenty more functionality to show off, including [default values](https://github.com/adammcarth/instance.js/wiki/Setup-Guide#settings) for parameters, a plethora of settings for `.send()`, [removing of parameters](https://github.com/adammcarth/instance.js/wiki/Remove-Parameters) and [clearing](https://github.com/adammcarth/instance.js/wiki/Reset-Instances) Instances, adding parameters [manually](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#add-attributes-) or from [html elements](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#addelement), and built-in client side validations are on the way.
 
+**TO DO:** Add built in validation methods.
+
 #### [Check Out The instance.js Wiki For All Documentation](https://github.com/adammcarth/instance.js/wiki "See Full Documentation")
 #### [Contributing](https://github.com/adammcarth/instance.js/wiki/Contributing)
