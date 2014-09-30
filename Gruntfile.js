@@ -23,6 +23,7 @@ module.exports = function (grunt) {
                         "lib/remove.js",
                         "lib/reset.js",
                         "lib/clear.js",
+                        "lib/validations/methods.js",
                         "lib/send.js"
                     ]
                 }
