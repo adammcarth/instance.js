@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
             build: {
                 files: {
-                    "latest_version/instance-<%= pkg.version %>.min.js": [
+                    "instance-<%= pkg.version %>.min.js": [
                         "lib/class.js",
                         "lib/helpers.js",
                         "lib/add.js",
