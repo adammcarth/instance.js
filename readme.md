@@ -52,6 +52,27 @@ var name = Comment.get("name");
 alert("Your name is " + name );
 ```
 
+#### Add Some Validations [Optional]
+
+If there's no message for the comment, Instance won't send it...
+
+```javascript
+var Comment = new Instance({
+   validations: {
+      message: { // name of the attribute/field
+         presence: { // built in validation rule
+            value: true,
+            fail: function() {
+               alert("Please enter your message!");
+            }
+         }
+      }
+   } 
+});
+```
+
+Check out the Wiki for a complete list of all the validation rules available. You can even use your own!
+
 #### Finishing Up: Send the instance to the server
 
 With parameters assigned to our new Instance Model, we can now perform an AJAX request to send them to any route on your server. We used jQuery to handle the click event.
@@ -68,28 +89,12 @@ $("#submit").click(function() {
 You might recall that [before](#get-started-define-a-new-instance) we specified a `name:` of "comment" when setting up the Comment instance. As a result, parameters will be sent in a two dimensional hash, that is:
 
 ```ruby
-{ :comment => { :name => "", :email => "", message => "" } }
-```
-
-In your web framework, access the parameters just like you would normally. What you do with them is up to you!
-
-```ruby
-# Ruby
-puts params[:comment][:name]
-#=> "Adam"
-```
-
-```php
-// PHP
-echo $_POST["comment"]["name"];
-// => "Adam"
+{ :comment => { :name => "", :email => "", :message => "" } }
 ```
 
 #### Dive deeper
 
-There's plenty more functionality to show off, including [default values](https://github.com/adammcarth/instance.js/wiki/Setup-Guide#settings) for parameters, a plethora of settings for `.send()`, [removing of parameters](https://github.com/adammcarth/instance.js/wiki/Remove-Parameters) and [clearing](https://github.com/adammcarth/instance.js/wiki/Reset-Instances) Instances, adding parameters [manually](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#add-attributes-) or from [html elements](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#addelement), and built-in client side validations are on the way.
-
-**TO DO:** Add built in validation methods.
+There's plenty more functionality to show off, including [default values](https://github.com/adammcarth/instance.js/wiki/Setup-Guide#settings) for parameters, a plethora of settings for `.send()`, [removing of parameters](https://github.com/adammcarth/instance.js/wiki/Remove-Parameters) and [clearing](https://github.com/adammcarth/instance.js/wiki/Reset-Instances) Instances, adding parameters [manually](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#add-attributes-) or from [html elements](https://github.com/adammcarth/instance.js/wiki/Add-Parameters#addelement), and checking out all of the built-in client side validation rules.
 
 #### [Check Out The instance.js Wiki For All Documentation](https://github.com/adammcarth/instance.js/wiki "See Full Documentation")
 #### [Contributing](https://github.com/adammcarth/instance.js/wiki/Contributing)
