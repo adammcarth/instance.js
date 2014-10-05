@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <title>instance.js - Test</title>
-    <script type="text/javascript" src="./instance.min.js"></script>
+    <script type="text/javascript" src="../latest_version/instance-1.1.0.min.js"></script>
   </head>
 
   <body>
@@ -46,6 +46,41 @@
       },
       error: function(status, response) {
         alert("Oops. The comment failed to submit (ensure you set the url to a working test server script). Status: " + status + ", Server Response: " + response);
+      },
+      validations: {
+        name: {
+          presence: {
+            value: true,
+            fail: function() {
+              alert("Please enter your name!");
+            }
+          },
+
+          alphabetic: {
+            value: true,
+            fail: function() {
+              alert("Your name can't have numbers in it!?");
+            }
+          }
+        }
+        handle: {
+          allow_blank: true,
+          starts_with: {
+            value: "@",
+            fail: function() {
+              alert("Your handle must start with '@'.");
+            }
+          }
+        },
+
+        comment: {
+          presence: {
+            value: true,
+            fail: function() {
+              alert("Please enter your comment!");
+            }
+          }
+        }
       }
     });
 
