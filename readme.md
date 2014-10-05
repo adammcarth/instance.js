@@ -71,7 +71,7 @@ var Comment = new Instance({
 });
 ```
 
-Check out the Wiki for a complete list of all the validation rules available. You can even use your own!
+Check out the [Instance Validations Wiki page](https://github.com/adammcarth/instance.js/wiki/Validations) for a complete list of all the validation rules available. You can even use your own!
 
 #### Finishing Up: Send the instance to the server
 
